@@ -1,49 +1,59 @@
-# History files
-.Rhistory
-.Rapp.history
+library(tesseract)
+eng <- tesseract("eng")
+text <- tesseract::ocr("http://jeroen.github.io/images/testocr.png", engine = eng)
+cat(text)
 
-# Session Data files
-.RData
-.RDataTmp
+results <- tesseract::ocr_data("http://jeroen.github.io/images/testocr.png", engine = eng)
+results
 
-# User-specific files
-.Ruserdata
+tesseract_info()
 
-# Example code in package build process
-*-Ex.R
+# Only need to do download once:
+tesseract_download("nld")
 
-# Output files from R CMD build
-/*.tar.gz
+(dutch <- tesseract("nld"))
 
-# Output files from R CMD check
-/*.Rcheck/
+text <- ocr("C:\\Users\\shaha\\R Project\\dutch.PNG", engine = dutch)
+cat(text)
 
-# RStudio files
-.Rproj.user/
+# Preprocessing with Magick 
 
-# produced vignettes
-vignettes/*.html
-vignettes/*.pdf
+library(magick)
 
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
-.httr-oauth
+input <- image_read("https://jeroen.github.io/images/bowers.jpg")
 
-# knitr and R markdown default cache directories
-*_cache/
-/cache/
+text <- input %>%
+  image_resize("2000x") %>%
+  image_convert(type = 'Grayscale') %>%
+  image_trim(fuzz = 40) %>%
+  image_write(format = 'png', density = '300x300') %>%
+  tesseract::ocr() 
 
-# Temporary files created by R markdown
-*.utf8.md
-*.knit.md
+cat(text)
+#Read from PDF files
 
-# R Environment Variables
-.Renviron
 
-# pkgdown site
-docs/
+pngfile <- pdftools::pdf_convert('https://jeroen.github.io/images/ocrscan.pdf', dpi = 600)
 
-# translation temp files
-po/*~
+text <- tesseract::ocr(pngfile)
+cat(text)
 
-# RStudio Connect folder
-rsconnect/
+#tesseract control parameter
+
+tesseract_params('color')
+
+tesseract::tesseract_info()['version']
+
+numbers <- tesseract(options = list(tessedit_char_whitelist = "$.0123456789"))
+cat(ocr("https://jeroen.github.io/images/receipt.png", engine = numbers))
+
+#can easily remove dollar sign and see if this works. 
+
+
+
+
+
+
+
+
+
