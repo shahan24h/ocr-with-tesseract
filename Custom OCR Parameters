@@ -1,0 +1,2 @@
+numbers <- tesseract(options = list(tessedit_char_whitelist = "$.0123456789"))
+cat(ocr("https://jeroen.github.io/images/receipt.png", engine = numbers))
