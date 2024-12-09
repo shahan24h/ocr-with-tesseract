@@ -1,3 +1,5 @@
+#tesseract library contains eng language by default. if needed we can update this library.
+
 library(tesseract)
 eng <- tesseract("eng")
 text <- tesseract::ocr("http://jeroen.github.io/images/testocr.png", engine = eng)
@@ -8,14 +10,15 @@ results
 
 tesseract_info()
 
-# Only need to do download once:
+# Only need to do download once: Updating language
 tesseract_download("nld")
 
 (dutch <- tesseract("nld"))
-
+#This is run in local server 
 text <- ocr("C:\\Users\\shaha\\R Project\\dutch.PNG", engine = dutch)
 cat(text)
 
+#magick can read jpg and make it format.
 # Preprocessing with Magick 
 
 library(magick)
