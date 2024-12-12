@@ -10,7 +10,7 @@ results
 
 tesseract_info()
 
-# Only need to do download once: Updating language
+# Only need to do download once: Updating language(This one Netherland-dutch)
 tesseract_download("nld")
 
 (dutch <- tesseract("nld"))
