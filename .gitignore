@@ -23,6 +23,7 @@ cat(text)
 
 library(magick)
 
+#File path goese here:
 input <- image_read("https://jeroen.github.io/images/bowers.jpg")
 
 text <- input %>%
