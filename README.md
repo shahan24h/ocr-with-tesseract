@@ -12,10 +12,10 @@ This project leverages the `tesseract` and `magick` R libraries to:
 
 ## Features
 
-- ✅ OCR support for multiple languages.
-- ✅ Image preprocessing with Magick.
-- ✅ OCR from PDF files.
-- ✅ Custom OCR settings (e.g., character whitelists).
+ ✅ OCR support for multiple languages.
+ ✅ Image preprocessing with Magick.
+ ✅ OCR from PDF files.
+ ✅ Custom OCR settings (e.g., character whitelists).
 
 ## Prerequisites
 
