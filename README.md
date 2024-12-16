@@ -10,7 +10,7 @@ This project leverages the `tesseract` and `magick` R libraries to:
 - Support multilingual text extraction.
 - Customize OCR with specific parameters.
 
-## Features
+#Features
 
  ✅ OCR support for multiple languages.
  ✅ Image preprocessing with Magick.
