@@ -36,7 +36,7 @@ text <- input %>%
 cat(text)
 #Read from PDF files
 
-
+#filepath
 pngfile <- pdftools::pdf_convert('https://jeroen.github.io/images/ocrscan.pdf', dpi = 600)
 
 text <- tesseract::ocr(pngfile)
