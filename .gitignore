@@ -18,7 +18,7 @@ tesseract_download("nld")
 text <- ocr("C:\\Users\\shaha\\R Project\\dutch.PNG", engine = dutch)
 cat(text)
 
-#magick can read jpg and make it format.
+#magick can read jpg and make it format it into png.
 # Preprocessing with Magick 
 
 library(magick)
