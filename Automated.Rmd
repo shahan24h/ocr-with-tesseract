@@ -1,0 +1,84 @@
+```{r}
+library(shiny)
+library(tesseract)
+library(pdftools)
+
+# Define UI
+ui <- fluidPage(
+  titlePanel("Automated Tesseract OCR App"),
+  sidebarLayout(
+    sidebarPanel(
+      textInput("folder", "Folder Path to Monitor:", value = "P:/R_Shiny/Photos with text")
+    ),
+    mainPanel(
+      tableOutput("processed_files"),
+      textOutput("ocr_text")
+    )
+  )
+)
+
+# Define server logic
+server <- function(input, output, session) {
+  # Reactive values to store processed files
+  processed_files <- reactiveVal(data.frame(Filename = character(), ExtractedText = character(), stringsAsFactors = FALSE))
+  
+  # Timer for folder monitoring
+  observe({
+    invalidateLater(5000, session)  # Automatically check every 5 seconds
+    folder <- input$folder
+    req(folder)  # Ensure the folder path is valid
+    
+    # Monitor folder and process new files
+    files <- list.files(folder, full.names = TRUE, pattern = "\\.(png|jpeg|jpg|pdf)$")
+    processed <- processed_files()
+    new_files <- setdiff(files, processed$Filename)  # Identify unprocessed files
+    
+    if (length(new_files) > 0) {
+      for (file in new_files) {
+        if (grepl("\\.pdf$", file, ignore.case = TRUE)) {
+          # Process PDF files
+          text_from_pdf <- tryCatch({
+            # Extract images from PDF and perform OCR on each
+            pdf_images <- pdf_convert(file, dpi = 300)
+            ocr_texts <- sapply(pdf_images, function(img) ocr(img, engine = tesseract()))
+            paste(ocr_texts, collapse = "\n\n")  # Combine text from all pages
+          }, error = function(e) paste("Error processing PDF:", file))
+          
+          # Append the result
+          processed <- rbind(processed, data.frame(Filename = file, ExtractedText = text_from_pdf, stringsAsFactors = FALSE))
+        } else {
+          # Process image files
+          extracted_text <- tryCatch(
+            ocr(file, engine = tesseract()), 
+            error = function(e) paste("Error processing:", file)
+          )
+          
+          # Append the result
+          processed <- rbind(processed, data.frame(Filename = file, ExtractedText = extracted_text, stringsAsFactors = FALSE))
+        }
+      }
+      processed_files(processed)
+    }
+  })
+  
+  # Output processed files
+  output$processed_files <- renderTable({
+    processed_files()
+  })
+  
+  # Output the most recent OCR result
+  output$ocr_text <- renderText({
+    req(processed_files())
+    paste("Last Processed File:", tail(processed_files()$Filename, 1), "\nExtracted Text:", tail(processed_files()$ExtractedText, 1))
+  })
+}
+
+# Run the app
+shinyApp(ui = ui, server = server)
+
+
+
+
+
+```
+
