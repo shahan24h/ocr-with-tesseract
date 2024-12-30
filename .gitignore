@@ -1,4 +1,4 @@
-#tesseract library contains eng language by default. if needed we can update this library.
+#tesseract library contains eng language by default.
 
 library(tesseract)
 eng <- tesseract("eng")
