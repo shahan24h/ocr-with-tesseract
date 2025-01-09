@@ -3,7 +3,7 @@ install.packages('magick')
 
 library(magick)
 
-input <- image_read("https://jeroen.github.io/images/bowers.jpg")
+input <- image_read("path")
 
 text <- input %>%
   image_resize("2000x") %>%
