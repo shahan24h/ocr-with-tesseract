@@ -1,3 +1,4 @@
-#numbers
+#numbers with decimal
+
 numbers <- tesseract(options = list(tessedit_char_whitelist = "$.0123456789"))
 cat(ocr("path/goes/here", engine = numbers))
