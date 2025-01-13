@@ -10,5 +10,6 @@ text <- input %>%
   image_convert(type = 'Grayscale') %>%
   image_trim(fuzz = 40) %>%
   image_write(format = 'png', density = '300x300') %>%
-  tesseract::ocr() 
+  tesseract::ocr() .
+
 cat(text)
