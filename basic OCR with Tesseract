@@ -1,4 +1,5 @@
 library(tesseract)
+
 eng <- tesseract("eng")
 text <- tesseract::ocr("http://jeroen.github.io/images/testocr.png", engine = eng)
 cat(text)
